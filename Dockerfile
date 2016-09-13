@@ -12,10 +12,13 @@ RUN chmod +x *.sh
 # install dependencies
 RUN ./fixnetwork.sh && apt-get update && apt-get install -y git make libeigen3-dev ros-fuerte-ros-comm ros-fuerte-opencv2 ros-fuerte-vision-opencv ros-fuerte-perception-pcl ros-fuerte-image-common
 
+COPY fix_build.patch ./
+
 # download dvo and build
 RUN ./fixnetwork.sh && git clone -b fuerte https://github.com/ros-visualization/visualization.git && git clone https://github.com/tum-vision/dvo.git && ./build.sh
 
 # copy updated launch file
 COPY benchmark.launch ./dvo/dvo_benchmark/launch/benchmark.launch
 
-ENTRYPOINT ./run.sh
+ENTRYPOINT ["/root/ros_entrypoint.sh"]
+CMD ["roslaunch", "dvo_benchmark", "benchmark.launch", "dataset:=/dataset", "output_dir:=/dataset/"]

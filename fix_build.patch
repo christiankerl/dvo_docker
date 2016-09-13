@@ -1,0 +1,26 @@
+From c154f3486250687eae5de20b079201ffc6d2a950 Mon Sep 17 00:00:00 2001
+From: Christian Kerl <christian.kerl@in.tum.de>
+Date: Tue, 13 Sep 2016 11:23:15 +0200
+Subject: [PATCH] lower optimization level and remove -march=native to compile
+ with ubuntu 12.04 on recent cpu
+
+---
+ dvo_core/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dvo_core/CMakeLists.txt b/dvo_core/CMakeLists.txt
+index b430773..9baef8c 100644
+--- a/dvo_core/CMakeLists.txt
++++ b/dvo_core/CMakeLists.txt
+@@ -36,7 +36,7 @@ include_directories(${VTK_INCLUDE_DIRS})
+ rosbuild_check_for_sse()
+ 
+ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO
+-   "${SSE_FLAGS} -O3 -march=native"
++   "${SSE_FLAGS} -O2"
+ )
+ 
+ rosbuild_add_library(${PROJECT_NAME} 
+-- 
+1.9.1
+
